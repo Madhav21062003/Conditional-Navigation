@@ -30,7 +30,7 @@ class MainFragment : Fragment() {
 
         binding.apply {
             btnShowProfile.setOnClickListener {
-                val action = MainFragmentDirections.actionMainFragmentToLoginFragment()
+                val action = MainFragmentDirections.actionMainFragmentToProfileFragment()
                 findNavController().navigate(action)
             }
         }

@@ -11,6 +11,10 @@ import com.madhavsolanki.conditionalnavigation.databinding.FragmentLoginBinding
 
 class LoginFragment : Fragment() {
 
+    companion object{
+        const val LOGIN_SUCCESSFUL = "LOGIN_SUCCESSFUL"
+    }
+
 
     private var _binding: FragmentLoginBinding? = null
     private val binding get() = _binding!!
@@ -28,13 +32,20 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
+
+            // Using Safe state handle
+            val savedStateHandle = findNavController().previousBackStackEntry!!.savedStateHandle
+            savedStateHandle.set(LOGIN_SUCCESSFUL, false)
+
+            UserLoginInfo.user = null
+
             btnLogin.setOnClickListener {
                 val username = etUsername.text.toString()
                 val password = etPassword.text.toString()
 
                 UserLoginInfo.user = User(username)
-                val action = LoginFragmentDirections.actionLoginFragmentToProfileFragment()
-                findNavController().navigate(action)
+                savedStateHandle.set(LOGIN_SUCCESSFUL, true)
+                findNavController().popBackStack()
             }
         }
     }
